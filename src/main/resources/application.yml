@@ -1,0 +1,23 @@
+server:
+  port: 8090
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:employee_master
+    driverClassName: org.h2.Driver
+    username: h2admin
+    password: h2password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+
+  h2:
+    console.enabled: true
+    settings.web-allow-others: true
+
+  graphql:
+    graphiql:
+      enabled: true
