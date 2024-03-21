@@ -23,4 +23,7 @@ public class Employee {
 
     @Column(name="DEPT_ID")
     private Integer deptId;
+
+    @Column(name = "PHONE_NUMBER")
+    private String phoneNumber;
 }

@@ -21,3 +21,11 @@ spring:
   graphql:
     graphiql:
       enabled: true
+    websocket:
+      path: /graphql
+
+authentication:
+  enabled: true
+
+graphql:
+  fieldAuthentication: enabled

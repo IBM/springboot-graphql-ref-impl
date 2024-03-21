@@ -3,11 +3,13 @@ package com.ibm.gqldemo.controllers;
 import com.ibm.gqldemo.model.Department;
 import com.ibm.gqldemo.model.Employee;
 import com.ibm.gqldemo.repositories.DepartmentRepository;
-import com.ibm.gqldemo.repositories.EmployeeRepository;
+import com.ibm.gqldemo.service.EmployeeService;
+import com.ibm.gqldemo.service.EmployeeSubscription;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.*;
 import org.springframework.stereotype.Controller;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -20,19 +22,22 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class EmployeeController {
 
-    private EmployeeRepository employeeRepository;
     private DepartmentRepository deptRepo;
+
+    private EmployeeService employeeService;
+
+    private EmployeeSubscription employeeSubscription;
 
     @QueryMapping("allEmployees")
     public List<Employee> allEmployees() {
-        System.out.println("Searching all emps");
+
         log.info("Searching all employees");
-        return employeeRepository.findAll();
+        return employeeService.findAll();
     }
 
     @MutationMapping("createEmployee")
     public Employee createEmployee(@Argument Employee employee) {
-        employeeRepository.save(employee);
+        employeeService.save(employee);
         return employee;
     }
 
@@ -50,6 +55,12 @@ public class EmployeeController {
                                 .findFirst()
                                 .orElse(new Department())
                 )));
+    }
+
+    @SubscriptionMapping(name = "employeeSubscription")
+    public Flux<Employee> employeeSubscription() {
+        log.info("Starting Employee subscription");
+        return employeeSubscription.employees();
     }
 
 }

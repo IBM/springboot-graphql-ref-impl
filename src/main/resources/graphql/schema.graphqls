@@ -1,7 +1,10 @@
+directive @auth(role: String!) on FIELD_DEFINITION
+
 type Employee {
   id: Int!
   name: String
   address: String
+  phoneNumber: String @auth(role: "admin")
   department: Department
 }
 
@@ -22,6 +25,25 @@ type Query {
 }
 
 type Mutation {
-  createEmployee(id: Int!): Employee!
+  createEmployee(employee: EmployeeInput): Employee!
   createDepartment(id: Int!): Department!
+}
+
+input EmployeeInput {
+  id: Int!
+  name: String
+  address: String
+  phoneNumber: String
+  deptId: Int
+}
+
+type Subscription {
+  employeeSubscription : Employee!
+  employeeWithDeptIdSubscription(deptId: String): Employee!
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
 }
