@@ -51,4 +51,21 @@ From above query we would demand changes to Employee entity. In another browser 
 GraphQL as many visualizers or explorers like Voyager, GraphiQL or Playground. With this application GraphiQL is built-in. It can be accessed from http://localhost:8090/graphiql URL. This tool lets us explore all the schema models exposed by the API and provies a query tool wherein we can write and submit GraphQL queries to test out our API
 
 ## How to run the application
-The application can be run as a regular spring-boot java application via IDE or from command-line without any JVM options or arguments.   
+The application can be run as a regular spring-boot java application via IDE or from command-line without any JVM options or arguments.
+
+Once the application has started you can open GraphQL query console at http://localhost:8090/graphiql. You can fire a sample query as follows.
+
+```
+query MyQuery {
+    allEmployees {
+        address
+        id
+        name
+        department {
+            id
+            name
+        }
+        phoneNumber
+    }
+}
+```
